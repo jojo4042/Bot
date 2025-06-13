@@ -94,3 +94,7 @@
     {% endif %}
 </body>
 </html>
+
+{% if error %}
+    <div style="color:red; font-weight:bold;">{{ error }}</div>
+{% endif %}
