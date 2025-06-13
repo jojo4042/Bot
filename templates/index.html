@@ -98,3 +98,6 @@
 {% if error %}
     <div style="color:red; font-weight:bold;">{{ error }}</div>
 {% endif %}
+{% if prediction %}
+  <p><strong>Résultat :</strong> {{ prediction }}</p>
+{% endif %}
