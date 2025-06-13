@@ -10,11 +10,23 @@ def index():
     except Exception as e:
         return f"Erreur lors du rendu : {e}"
 
-@app.route('/predict', methods=['GET', 'POST'])
+@app.route('/predict', methods=['POST'])
 def predict():
-    if request.method == 'POST':
-        team1_id = request.form['team1']
-        team2_id = request.form['team2']
+    try:
+        team1_id = request.form.get('team1')
+        team2_id = request.form.get('team2')
+
+        if not team1_id or not team2_id:
+            return render_template("index.html", error="Veuillez sélectionner les deux équipes.")
+
+        # Exemple simple : simulation prédiction
+        prediction = "Équipe 1 favorite" if team1_id > team2_id else "Équipe 2 favorite"
+
+        return render_template("index.html", prediction=prediction)
+
+    except Exception as e:
+        return render_template("index.html", error=f"Erreur serveur : {e}")
+
 
         headers = {
             'x-rapidapi-host': 'v3.football.api-sports.io',
@@ -45,4 +57,5 @@ import os
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=port, debug=True)
+
