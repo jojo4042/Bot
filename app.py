@@ -19,23 +19,29 @@ def get_upcoming_matches(league_id=LEAGUE_ID, season=SEASON, next_n=10):
     }
     resp = requests.get(url, headers=HEADERS, params=params)
     data = resp.json()
+    
+    print("🟡 Résultat brut API fixtures:")
+    print(data)  # 👈 ajoute ceci
+
     matches = []
     if data.get('response'):
         for item in data['response']:
             f = item['fixture']
             t = item['teams']
             l = item['league']
-            matches.append({
-                'fixture_id': f['id'],
-                'date': f['date'][:10],
-                'time': f['date'][11:16],
-                'home_team': t['home']['name'],
-                'home_id': t['home']['id'],
-                'away_team': t['away']['name'],
-                'away_id': t['away']['id'],
-                'league': l['name'],
-                'venue': f.get('venue', {}).get('name', 'N/A')
-            })
+            matches = [{
+    'date': '2025-06-15',
+    'time': '20:00',
+    'home_team': 'Paris SG',
+    'home_id': 85,
+    'away_team': 'Marseille',
+    'away_id': 81,
+    'league': 'Ligue 1',
+    'venue': 'Parc des Princes'
+}]
+
+    else:
+        print("❌ Aucune donnée reçue de l'API (clé invalide ? league vide ?)")
     return matches
 
 def get_team_ranking(team_id, league_id=LEAGUE_ID, season=SEASON):
