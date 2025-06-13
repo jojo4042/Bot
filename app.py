@@ -3,12 +3,10 @@ import requests
 
 app = Flask(__name__)
 
-@app.route('/', methods=['GET', 'HEAD'])
-def index():
-    try:
-        return render_template("index.html")
-    except Exception as e:
-        return f"Erreur lors du rendu : {e}"
+@app.route("/", methods=["GET", "POST"])
+def home():
+    return render_template("index.html")
+
 
 @app.route('/predict', methods=['POST'])
 def predict():
