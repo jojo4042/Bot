@@ -1,132 +1,53 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Bot de Paris Sportifs</title>
+    <meta charset="UTF-8" />
+    <title>Prédiction Matchs Sportifs</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f0f4f8;
-            text-align: center;
-            padding: 50px;
-        }
-        h1 {
-            color: #2c3e50;
-        }
-        form {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            display: inline-block;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        label {
-            display: block;
-            margin: 10px 0 5px;
-            font-weight: bold;
-        }
-        select {
-            padding: 8px;
-            width: 250px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: #3498db;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        button:hover {
-            background: #2980b9;
-        }
-        .result {
-            margin-top: 30px;
-            background: #dff0d8;
-            color: #3c763d;
-            padding: 20px;
-            border-radius: 8px;
-            display: inline-block;
-            border: 1px solid #d6e9c6;
-        }
+        body { font-family: Arial, sans-serif; margin: 2em; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 1em; }
+        th, td { border: 1px solid #ccc; padding: 0.5em; text-align: center; }
+        th { background: #eee; }
+        form { margin-top: 1em; }
+        button { padding: 0.5em 1em; font-size: 1em; }
+        .prediction { margin-top: 1em; font-weight: bold; font-size: 1.2em; color: #007700; }
     </style>
 </head>
 <body>
-    <h1>🔮 Prédictions de Match – Bot de Paris Sportifs</h1>
+    <h1>Prochains matchs</h1>
 
-    <form action="/predict" method="POST">
-        <label for="team1">Équipe 1 :</label>
-        <select name="team1" required>
-            <option value="85">Paris Saint-Germain</option>
-            <option value="92">Olympique de Marseille</option>
-            <option value="84">AS Monaco</option>
-            <option value="79">Lille OSC</option>
-            <option value="95">RC Lens</option>
-            <option value="97">Stade Rennais</option>
-            <option value="96">Nice</option>
-        </select><br><br>
-
-        <label for="team2">Équipe 2 :</label>
-        <select name="team2" required>
-            <option value="85">Paris Saint-Germain</option>
-            <option value="92">Olympique de Marseille</option>
-            <option value="84">AS Monaco</option>
-            <option value="79">Lille OSC</option>
-            <option value="95">RC Lens</option>
-            <option value="97">Stade Rennais</option>
-            <option value="96">Nice</option>
-        </select><br><br>
-
-        <button type="submit">Lancer la Prédiction</button>
-    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Heure</th>
+                <th>Équipe à domicile</th>
+                <th>Équipe à l'extérieur</th>
+                <th>Prédire</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for match in matches %}
+            <tr>
+                <td>{{ match.date }}</td>
+                <td>{{ match.time }}</td>
+                <td>{{ match.home_team }}</td>
+                <td>{{ match.away_team }}</td>
+                <td>
+                    <form method="POST" style="margin:0;">
+                        <input type="hidden" name="home_id" value="{{ match.home_id }}" />
+                        <input type="hidden" name="away_id" value="{{ match.away_id }}" />
+                        <button type="submit">Prédire</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
     {% if prediction %}
-    <div class="result">
-        <h2>Résultat de la Prédiction</h2>
-        <p>Score forme équipe 1 : <strong>{{ team1_score }}</strong></p>
-        <p>Score forme équipe 2 : <strong>{{ team2_score }}</strong></p>
-        <p><strong>{{ prediction }}</strong> est considérée comme favorite ✅</p>
-    </div>
+        <div class="prediction">{{ prediction }}</div>
     {% endif %}
 </body>
 </html>
 
-{% if error %}
-    <div style="color:red; font-weight:bold;">{{ error }}</div>
-{% endif %}
-{% if prediction %}
-  <p><strong>Résultat :</strong> {{ prediction }}</p>
-{% endif %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Matchs à venir</title>
-</head>
-<body>
-    <h1>Matchs à venir</h1>
-    <table border="1" cellpadding="8">
-        <tr>
-            <th>Date</th>
-            <th>Heure</th>
-            <th>Équipe domicile</th>
-            <th>Équipe extérieure</th>
-            <th>Compétition</th>
-            <th>Lieu</th>
-        </tr>
-        {% for match in matches %}
-        <tr>
-            <td>{{ match.date[:10] }}</td>
-            <td>{{ match.time }}</td>
-            <td>{{ match.home_team }}</td>
-            <td>{{ match.away_team }}</td>
-            <td>{{ match.league }}</td>
-            <td>{{ match.venue }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-</body>
-</html>
