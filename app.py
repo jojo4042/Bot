@@ -1,11 +1,45 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template
 import requests
 
 app = Flask(__name__)
 
-@app.route("/", methods=["GET", "POST"])
-def home():
-    return render_template("index.html")
+API_KEY = 'ton_api_key_ici'  # à obtenir sur api-football.com
+API_URL = 'https://v3.football.api-sports.io/fixtures'
+
+headers = {
+    'x-apisports-key': API_KEY
+}
+
+def get_upcoming_matches():
+    params = {
+        'next': 10  # récupérer les 10 prochains matchs
+    }
+    response = requests.get(API_URL, headers=headers, params=params)
+    data = response.json()
+    matches = []
+    if data.get('response'):
+        for item in data['response']:
+            fixture = item['fixture']
+            teams = item['teams']
+            league = item['league']
+            matches.append({
+                'date': fixture['date'],
+                'time': fixture['date'][11:16],  # extraire l’heure (HH:MM)
+                'home_team': teams['home']['name'],
+                'away_team': teams['away']['name'],
+                'league': league['name'],
+                'venue': fixture.get('venue', {}).get('name', 'N/A')
+            })
+    return matches
+
+@app.route('/')
+def index():
+    matches = get_upcoming_matches()
+    return render_template('index.html', matches=matches)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
 
 
 @app.route("/predict", methods=["POST"])
@@ -13,7 +47,7 @@ def predict():
     team1 = request.form.get("team1")
     team2 = request.form.get("team2")
     
-    # ➕ ICI tu ajoutes ton code de prédiction (même fictif pour commencer)
+    # ➕ result = "Prédiction à venir..."i
     result = f"Équipe 1 : {team1}, Équipe 2 : {team2}"  # juste pour tester
     
     return render_template("index.html", prediction=result)
