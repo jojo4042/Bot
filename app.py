@@ -49,10 +49,13 @@ def index():
     return render_template("index.html", matches=matches, prediction=None)
 
 # Route de prédiction
-@app.route("/predict", methods=["POST"])
+@app.route('/predict', methods=['GET', 'POST'])
 def predict():
-    home_id = request.form.get("home_id")
-    away_id = request.form.get("away_id")
+    if request.method == 'POST':
+        # traitement des données du formulaire
+        ...
+    return render_template('predict.html')
+
 
     print(f"🔮 Prédiction demandée : Home ID = {home_id}, Away ID = {away_id}")
 
