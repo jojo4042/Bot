@@ -8,7 +8,7 @@ HEADERS = {'x-apisports-key': API_KEY}
 API_BASE = 'https://v3.football.api-sports.io'
 
 LEAGUE_ID = 39   # Exemple : Premier League (à adapter)
-SEASON = 2024    # Saison en cours
+SEASON = 2025    # Saison en cours
 
 def get_upcoming_matches(league_id=LEAGUE_ID, season=SEASON, next_n=10):
     url = f'{API_BASE}/fixtures'
