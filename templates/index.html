@@ -34,11 +34,12 @@
                 <td>{{ match.home_team }}</td>
                 <td>{{ match.away_team }}</td>
                 <td>
-                    <form method="POST" style="margin:0;">
-                        <input type="hidden" name="home_id" value="{{ match.home_id }}" />
-                        <input type="hidden" name="away_id" value="{{ match.away_id }}" />
-                        <button type="submit">Prédire</button>
-                    </form>
+                    <form method="POST" action="/predict">
+    <input type="text" name="team1">
+    <input type="text" name="team2">
+    <input type="submit" value="Prédire">
+</form>
+
                 </td>
             </tr>
         {% endfor %}
