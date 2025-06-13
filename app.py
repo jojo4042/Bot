@@ -3,7 +3,7 @@ import requests
 
 app = Flask(__name__)
 
-API_KEY = 'ton_api_key_ici'  # à obtenir sur api-football.com
+API_KEY = 0393053d71e47ea11117cacb6cf65a99
 API_URL = 'https://v3.football.api-sports.io/fixtures'
 
 headers = {
