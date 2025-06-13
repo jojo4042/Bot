@@ -8,15 +8,15 @@ def home():
     return render_template("index.html")
 
 
-@app.route('/predict', methods=['POST'])
+@app.route("/predict", methods=["POST"])
 def predict():
-    try:
-        team1_id = request.form.get('team1')
-        team2_id = request.form.get('team2')
-
-        if not team1_id or not team2_id:
-            return render_template("index.html", error="Veuillez sélectionner les deux équipes.")
-
+    team1 = request.form.get("team1")
+    team2 = request.form.get("team2")
+    
+    # ➕ ICI tu ajoutes ton code de prédiction (même fictif pour commencer)
+    result = f"Équipe 1 : {team1}, Équipe 2 : {team2}"  # juste pour tester
+    
+    return render_template("index.html", prediction=result)
         # Exemple simple : simulation prédiction
         prediction = "Équipe 1 favorite" if team1_id > team2_id else "Équipe 2 favorite"
 
