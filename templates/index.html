@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Bot de Paris Sportifs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f4f8;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        select {
+            padding: 8px;
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .result {
+            margin-top: 30px;
+            background: #dff0d8;
+            color: #3c763d;
+            padding: 20px;
+            border-radius: 8px;
+            display: inline-block;
+            border: 1px solid #d6e9c6;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔮 Prédictions de Match – Bot de Paris Sportifs</h1>
+
+    <form action="/predict" method="POST">
+        <label for="team1">Équipe 1 :</label>
+        <select name="team1" required>
+            <option value="85">Paris Saint-Germain</option>
+            <option value="92">Olympique de Marseille</option>
+            <option value="84">AS Monaco</option>
+            <option value="79">Lille OSC</option>
+            <option value="95">RC Lens</option>
+            <option value="97">Stade Rennais</option>
+            <option value="96">Nice</option>
+        </select><br><br>
+
+        <label for="team2">Équipe 2 :</label>
+        <select name="team2" required>
+            <option value="85">Paris Saint-Germain</option>
+            <option value="92">Olympique de Marseille</option>
+            <option value="84">AS Monaco</option>
+            <option value="79">Lille OSC</option>
+            <option value="95">RC Lens</option>
+            <option value="97">Stade Rennais</option>
+            <option value="96">Nice</option>
+        </select><br><br>
+
+        <button type="submit">Lancer la Prédiction</button>
+    </form>
+
+    {% if prediction %}
+    <div class="result">
+        <h2>Résultat de la Prédiction</h2>
+        <p>Score forme équipe 1 : <strong>{{ team1_score }}</strong></p>
+        <p>Score forme équipe 2 : <strong>{{ team2_score }}</strong></p>
+        <p><strong>{{ prediction }}</strong> est considérée comme favorite ✅</p>
+    </div>
+    {% endif %}
+</body>
+</html>
