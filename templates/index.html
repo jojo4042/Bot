@@ -101,3 +101,32 @@
 {% if prediction %}
   <p><strong>Résultat :</strong> {{ prediction }}</p>
 {% endif %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Matchs à venir</title>
+</head>
+<body>
+    <h1>Matchs à venir</h1>
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Date</th>
+            <th>Heure</th>
+            <th>Équipe domicile</th>
+            <th>Équipe extérieure</th>
+            <th>Compétition</th>
+            <th>Lieu</th>
+        </tr>
+        {% for match in matches %}
+        <tr>
+            <td>{{ match.date[:10] }}</td>
+            <td>{{ match.time }}</td>
+            <td>{{ match.home_team }}</td>
+            <td>{{ match.away_team }}</td>
+            <td>{{ match.league }}</td>
+            <td>{{ match.venue }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
